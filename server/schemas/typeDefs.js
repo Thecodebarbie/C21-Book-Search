@@ -4,15 +4,17 @@ const typeDefs = `
     username: String
     email: String
     password: String
-    thoughts: [Thought]!
+    savedBooks: [Book]!
   }
 
-  type Thought {
+  type Book {
     _id: ID
-    thoughtText: String
-    thoughtAuthor: String
-    createdAt: String
-    comments: [Comment]!
+    authors: [String]
+    description: String
+    bookId: String
+    image: String
+    link: String
+    title String
   }
 
   type Comment {
