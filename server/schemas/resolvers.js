@@ -64,7 +64,24 @@ const resolvers = {
       throw AuthenticationError;
       ('You need to be logged in!');
     },
-  }
+    addComment: async (parent, { thoughtId, commentText }, context) => {
+      if (context.user) {
+        return Thought.findOneAndUpdate(
+          { _id: thoughtId },
+          {
+            $addToSet: {
+              comments: { commentText, commentAuthor: context.user.username },
+            },
+          },
+          {
+            new: true,
+            runValidators: true,
+          }
+        );
+      }
+      throw AuthenticationError;
+    },
+  },
 };
 
 module.exports = resolvers;
