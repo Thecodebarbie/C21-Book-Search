@@ -40,7 +40,8 @@ const resolvers = {
       {
         const user = await User.findOneAndUpdate(
           { _id: context.user._id },
-          { $addToSet: { savedBooks: newBook } } //appending newBook to child//
+          { $addToSet: { savedBooks: newBook }}, //appending newBook to child//
+          {new:true}
         );
 
         return user;
@@ -48,18 +49,19 @@ const resolvers = {
       throw AuthenticationError;
       ('You need to be logged in!');
     },// the if statement is  using context.user to saveBook 'if' user is logged in
-    removeBook: async (parent, { bookId }) => {
+    removeBook: async (parent, { bookId }, context) => {
       if (context.user) {
-
-      const user =  await User.findOneAndUpdate(
+        const user = await User.findOneAndUpdate(
           { _id: context.user._id },
-          { $pull: { savedBooks: bookId } }
+          { $pull: { savedBooks: { bookId } } }, 
+          { new: true }
         );
-
+    
         return user;
       }
-      throw AuthenticationError;
+      throw new AuthenticationError('You need to be logged in!');
     },
+    
   },
 };
 
