@@ -15,7 +15,7 @@ const typeDefs = `
     bookId: String!
     image: String
     link: String
-    title String
+    title: String
   }
 
   type Auth {
@@ -30,7 +30,7 @@ const typeDefs = `
     bookId: String!
     image: String
     link: String
-    title String
+    title: String
   }
 
   type Query {
